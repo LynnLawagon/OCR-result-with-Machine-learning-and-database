@@ -91,17 +91,22 @@ def upload():
 @app.route('/save_guest', methods=['POST'])
 def save_guest():
     data = request.json
+
+    dob =data.get("Date_of_birth")
+    if dob == "":
+        dob = None 
+
     sql = """
     INSERT INTO tbl_guests
     (ID_type, First_name, Middle_name, Last_name, Date_of_birth, Address, Img_path)
     VALUES (%s, %s, %s, %s, %s, %s, %s)
-    """
+    """ 
     values = (
         data.get("ID_type", ""),
         data.get("First_name", ""),
         data.get("Middle_name", ""),
         data.get("Last_name", ""),
-        data.get("Date_of_birth", None),
+        dob,
         data.get("Address", ""),
         data.get("Img_path", "")
     )
